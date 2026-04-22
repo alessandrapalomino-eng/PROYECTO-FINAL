@@ -2,60 +2,32 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Almacén Sport - Registro</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Postres Gourmet | Sistema de Almacén</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <section id="registro-producto">
-        <h2>Registro de Nuevo Producto - Ropa Deportiva</h2>
-        <form id="form-registro">
-            <div class="campo">
-                <label>Código del Producto:</label>
-                <input type="text" id="codigo" placeholder="Ej: ZAP-NIKE-01" required>
-            </div>
-            
-            <div class="campo">
-                <label>Nombre del Producto:</label>
-                <input type="text" id="nombre" placeholder="Ej: Zapatillas Running XT" required>
-            </div>
+    <nav class="navbar">
+        <div class="logo">🍰 Dulce Gestión</div>
+        <ul class="nav-links">
+            <li><button onclick="cambiarModulo('registro')">1. Registro</button></li>
+            <li><button onclick="cambiarModulo('recepcion')">2. Recepción</button></li>
+            <li><button onclick="cambiarModulo('despacho')">3. Despacho</button></li>
+            <li><button onclick="cambiarModulo('inventario')">4. Inventario</button></li>
+        </ul>
+    </nav>
 
-            <div class="campo">
-                <label>Stock Inicial:</label>
-                <input type="number" id="stock-inicial" min="0" value="0" required>
-            </div>
+    <div id="app-container" class="container">
+        <div class="welcome-card">
+            <h1>Panel de Control</h1>
+            <p>Selecciona un módulo para gestionar el inventario de postres.</p>
+        </div>
+    </div>
 
-            <div class="campo">
-                <label>Costo Unitario Inicial (S/):</label>
-                <input type="number" id="costo-inicial" min="0" step="0.01" value="0.00" required>
-            </div>
-
-            <button type="submit" id="btn-registrar">Registrar Producto</button>
-        </form>
-    </section>
-
-    <div id="mensaje-exito"></div>
-
-    <script src="script.js"></script>
+    <script src="main.js"></script>
+    <script src="modulos/registro.js"></script>
+    <script src="modulos/recepcion.js"></script>
+    <script src="modulos/despacho.js"></script>
+    <script src="modulos/inventario.js"></script>
 </body>
 </html>
-<hr> <section id="recepcion-productos">
-    <h2>Módulo 2: Recepción de Mercadería (Ingreso)</h2>
-    <form id="form-recepcion">
-        <div class="campo">
-            <label>Código del Producto:</label>
-            <input type="text" id="recep-codigo" placeholder="Ej: ZAP-NIKE-01" required>
-        </div>
-        
-        <div class="campo">
-            <label>Cantidad Recibida:</label>
-            <input type="number" id="recep-cantidad" min="1" required>
-        </div>
-
-        <div class="campo">
-            <label>Costo Unitario de Compra (S/):</label>
-            <input type="number" id="recep-costo" min="0.01" step="0.01" required>
-        </div>
-
-        <button type="submit" id="btn-recepcion" style="background-color: #3498db;">Registrar Ingreso</button>
-    </form>
-</section>
