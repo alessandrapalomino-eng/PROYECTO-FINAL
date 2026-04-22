@@ -1,85 +1,21 @@
-/* Configuración General */
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f4f7f6;
-    color: #333;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
+:root {
+    --cafe-oscuro: #5D4037;
+    --crema: #FDF5E6;
+    --pastel: #D7CCC8;
+    --acento: #8D6E63;
 }
 
-/* Contenedor del Módulo 1 [cite: 7, 74] */
-#registro-producto {
-    background: #ffffff;
-    padding: 2rem;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 500px;
-}
+body { font-family: 'Segoe UI', sans-serif; background-color: var(--crema); margin: 0; }
 
-h2 {
-    color: #2c3e50;
-    text-align: center;
-    margin-bottom: 1.5rem;
-    border-bottom: 2px solid #3498db;
-    padding-bottom: 10px;
-}
+.navbar { background: var(--cafe-oscuro); padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; color: white; }
+.nav-links { list-style: none; display: flex; gap: 15px; }
+.nav-links button { background: var(--acento); border: none; color: white; padding: 8px 15px; border-radius: 5px; cursor: pointer; transition: 0.3s; }
+.nav-links button:hover { background: #a1887f; }
 
-/* Diseño del Formulario [cite: 8] */
-.campo {
-    margin-bottom: 15px;
-}
+.container { max-width: 900px; margin: 40px auto; padding: 20px; background: white; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
 
-label {
-    display: block;
-    font-weight: bold;
-    margin-bottom: 5px;
-    color: #555;
-}
-
-/* Inputs con validaciones visuales [cite: 61, 62, 63] */
-input {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    box-sizing: border-box; /* Asegura que el padding no afecte el ancho */
-    transition: border-color 0.3s;
-}
-
-input:focus {
-    outline: none;
-    border-color: #3498db;
-    box-shadow: 0 0 5px rgba(52, 152, 219, 0.3);
-}
-
-/* Botón de Registro */
-button {
-    width: 100%;
-    padding: 12px;
-    background-color: #27ae60;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    margin-top: 10px;
-}
-
-button:hover {
-    background-color: #219150;
-}
-
-/* Mensajes de feedback */
-#mensaje-exito {
-    margin-top: 20px;
-    padding: 10px;
-    border-radius: 4px;
-    color: #27ae60;
-    font-weight: bold;
-    text-align: center;
-}
+form { display: grid; gap: 15px; }
+input { padding: 10px; border: 1px solid #ccc; border-radius: 5px; }
+table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+th, td { padding: 12px; border-bottom: 1px solid #ddd; text-align: left; }
+th { background: var(--pastel); }
