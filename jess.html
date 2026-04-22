@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>🍰 Sweet Stock — Sistema de Almacén</title>
+  <link rel="stylesheet" href="jess.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="logo">
+        <span class="logo-icon">🍰</span>
+        <div>
+          <h1 class="logo-title">Sweet Stock</h1>
+          <p class="logo-sub">Sistema de Almacén · Pastelería</p>
+        </div>
+      </div>
+      <nav class="top-nav">
+        <a href="#modulo1" class="nav-link active" data-tab="modulo1">Registrar Producto</a>
+        <a href="#modulo2" class="nav-link" data-tab="modulo2">Recepción</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- TOAST -->
+  <div id="toast" class="toast hidden"></div>
+
+  <!-- MAIN -->
+  <main class="main-content">
+
+    <!-- MÓDULO 1 -->
+    <section id="modulo1" class="module active-module">
+      <div class="module-header">
+        <span class="module-badge">Módulo 1</span>
+        <h2 class="module-title">Registrar Producto</h2>
+        <p class="module-desc">Añade nuevos productos al inventario de la pastelería con su stock y costo inicial.</p>
+      </div>
+
+      <div class="form-card">
+        <div class="form-grid">
+          <div class="field-group">
+            <label for="prod-codigo">Código del producto</label>
+            <input type="text" id="prod-codigo" placeholder="Ej: POST-001" />
+          </div>
+          <div class="field-group">
+            <label for="prod-nombre">Nombre del postre</label>
+            <input type="text" id="prod-nombre" placeholder="Ej: Tarta de fresas" />
+          </div>
+          <div class="field-group">
+            <label for="prod-stock">Stock inicial (unidades)</label>
+            <input type="number" id="prod-stock" placeholder="0" min="0" />
+          </div>
+          <div class="field-group">
+            <label for="prod-costo">Costo unitario (S/.)</label>
+            <input type="number" id="prod-costo" placeholder="0.00" min="0" step="0.01" />
+          </div>
+        </div>
+
+        <div class="preview-row" id="preview1">
+          <div class="preview-chip">
+            <span class="chip-label">Costo total inicial</span>
+            <span class="chip-value" id="prev-total">S/. 0.00</span>
+          </div>
+          <div class="preview-chip">
+            <span class="chip-label">Costo promedio inicial</span>
+            <span class="chip-value" id="prev-promedio">S/. 0.00</span>
+          </div>
+        </div>
+
+        <button class="btn-primary" onclick="registrarProducto()">
+          <span>＋</span> Registrar Producto
+        </button>
+      </div>
+
+      <!-- Tabla de productos -->
+      <div class="table-wrapper" id="tabla-productos-wrapper" style="display:none">
+        <h3 class="table-title">🍮 Productos Registrados</h3>
+        <div class="table-scroll">
+          <table class="data-table" id="tabla-productos">
+            <thead>
+              <tr>
+                <th>Código</th>
+                <th>Nombre</th>
+                <th>Stock inicial</th>
+                <th>Costo unitario</th>
+                <th>Costo total</th>
+                <th>Costo promedio</th>
+              </tr>
+            </thead>
+            <tbody id="tbody-productos"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- MÓDULO 2 -->
+    <section id="modulo2" class="module">
+      <div class="module-header">
+        <span class="module-badge mod2">Módulo 2</span>
+        <h2 class="module-title">Recepción de Productos</h2>
+        <p class="module-desc">Registra el ingreso de nueva mercadería y actualiza el costo promedio ponderado.</p>
+      </div>
+
+      <div class="form-card">
+        <div class="form-grid">
+          <div class="field-group">
+            <label for="rec-codigo">Código del producto</label>
+            <input type="text" id="rec-codigo" placeholder="Ej: POST-001" oninput="previewRecepcion()" />
+          </div>
+          <div class="field-group">
+            <label for="rec-cantidad">Cantidad recibida</label>
+            <input type="number" id="rec-cantidad" placeholder="0" min="1" oninput="previewRecepcion()" />
+          </div>
+          <div class="field-group">
+            <label for="rec-costo">Costo unitario de compra (S/.)</label>
+            <input type="number" id="rec-costo" placeholder="0.00" min="0.01" step="0.01" oninput="previewRecepcion()" />
+          </div>
+        </div>
+
+        <!-- Info del producto encontrado -->
+        <div class="product-info-card" id="producto-info" style="display:none">
+          <div class="pi-header">
+            <span class="pi-icon">📦</span>
+            <div>
+              <p class="pi-name" id="pi-nombre">—</p>
+              <p class="pi-code" id="pi-codigo">—</p>
+            </div>
+          </div>
+          <div class="pi-stats">
+            <div class="pi-stat">
+              <span class="pi-stat-label">Stock actual</span>
+              <span class="pi-stat-val" id="pi-stock">0</span>
+            </div>
+            <div class="pi-stat">
+              <span class="pi-stat-label">Costo promedio actual</span>
+              <span class="pi-stat-val" id="pi-promedio">S/. 0.00</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Preview de resultado -->
+        <div class="preview-row" id="preview2" style="display:none">
+          <div class="preview-chip wide">
+            <span class="chip-label">Nuevo stock</span>
+            <span class="chip-value" id="prev-nuevo-stock">0</span>
+          </div>
+          <div class="preview-chip wide">
+            <span class="chip-label">Nuevo costo total</span>
+            <span class="chip-value" id="prev-nuevo-total">S/. 0.00</span>
+          </div>
+          <div class="preview-chip wide accent">
+            <span class="chip-label">Nuevo costo promedio</span>
+            <span class="chip-value" id="prev-nuevo-promedio">S/. 0.00</span>
+          </div>
+        </div>
+
+        <button class="btn-primary mod2" onclick="registrarRecepcion()">
+          <span>📥</span> Registrar Recepción
+        </button>
+      </div>
+
+      <!-- Historial de recepciones -->
+      <div class="table-wrapper" id="tabla-recepciones-wrapper" style="display:none">
+        <h3 class="table-title">📋 Historial de Recepciones</h3>
+        <div class="table-scroll">
+          <table class="data-table" id="tabla-recepciones">
+            <thead>
+              <tr>
+                <th>Fecha</th>
+                <th>Código</th>
+                <th>Producto</th>
+                <th>Cant. recibida</th>
+                <th>Costo unitario</th>
+                <th>Stock resultante</th>
+                <th>Nuevo promedio</th>
+              </tr>
+            </thead>
+            <tbody id="tbody-recepciones"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="jess.js"></script>
+</body>
+</html>
